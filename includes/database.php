@@ -7,6 +7,7 @@ try {
     $user = $_ENV['DB_USER'];
     $pass = $_ENV['DB_PASS'];
     $database = $_ENV['DB_NAME'];
+    // $conexion = $_ENV['DB_CONEXION'];
 
     $db =  new PDO("informix:host=$host; service=$service;database=$database; server=$server; protocol=onsoctcp;EnableScrollableCursors=1", "$user", "$pass");
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -19,6 +20,6 @@ try {
 
         "codigo" => 5,
     ]);
-    // header('Location: /');
+    //  header('Location: /');
     exit;
 }

@@ -3,6 +3,9 @@ import { Toast, validarFormulario } from "../funciones"
 import Swal from "sweetalert2";
 
 const formulario = document.getElementById('formProducto')
+const tablaProducto = document.getElementById('tablaProducto')
+
+
 const guardar = async (e) => {
     e.preventDefault()
 
@@ -17,7 +20,7 @@ const guardar = async (e) => {
 
     try {
         const body = new FormData(formulario)
-        const url = "/nuevo_proyecto/API/producto/guardar"
+        const url = "/NUEVO_PROYECTO/API/producto/guardar"
         const config = {
             method: 'POST',
             body
@@ -25,6 +28,8 @@ const guardar = async (e) => {
 
         const respuesta =await fetch(url, config);
         const data = await respuesta.json();
+
+        console.log(data);
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         if(codigo == 1){
@@ -43,5 +48,6 @@ const guardar = async (e) => {
         console.log(error);
     }
 }
+
 
 formulario.addEventListener('submit', guardar)

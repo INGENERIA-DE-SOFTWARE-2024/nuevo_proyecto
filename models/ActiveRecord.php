@@ -34,7 +34,7 @@ class ActiveRecord {
     // Registros - CRUD
     public function guardar() {
         $resultado = '';
-        $id = static::$idTabla ?? 'id';
+        $id = static::$idTabla ?? 'pro_id';
         if(!is_null($this->$id)) {
             // actualizar
             $resultado = $this->actualizar();
@@ -55,7 +55,7 @@ class ActiveRecord {
 
     // Busca un registro por su id
     public static function find($id = []) {
-        $idQuery = static::$idTabla ?? 'id';
+        $idQuery = static::$idTabla ?? 'pro_id';
         $query = "SELECT * FROM " . static::$tabla ;
 
         if(is_array(static::$idTabla)){
@@ -117,7 +117,7 @@ class ActiveRecord {
 
         return [
            'resultado' =>  $resultado,
-           'id' => self::$db->lastInsertId(static::$tabla)
+           'pro_id' => self::$db->lastInsertId(static::$tabla)
         ];
     }
 
@@ -130,7 +130,7 @@ class ActiveRecord {
         foreach($atributos as $key => $value) {
             $valores[] = "{$key}={$value}";
         }
-        $id = static::$idTabla ?? 'id';
+        $id = static::$idTabla ?? 'pro_id';
 
         $query = "UPDATE " . static::$tabla ." SET ";
         $query .=  join(', ', $valores );
@@ -160,7 +160,7 @@ class ActiveRecord {
 
     // Eliminar un registro - Toma el ID de Active Record
     public function eliminar() {
-        $idQuery = static::$idTabla ?? 'id';
+        $idQuery = static::$idTabla ?? 'pro_id';
         $query = "DELETE FROM "  . static::$tabla . " WHERE $idQuery = " . self::$db->quote($this->id);
         $resultado = self::$db->exec($query);
         return $resultado;
@@ -225,7 +225,7 @@ class ActiveRecord {
         $atributos = [];
         foreach(static::$columnasDB as $columna) {
             $columna = strtolower($columna);
-            if($columna === 'id' || $columna === static::$idTabla) continue;
+            if($columna === 'pro_id' || $columna === static::$idTabla) continue;
             $atributos[$columna] = $this->$columna;
         }
         return $atributos;

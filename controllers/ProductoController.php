@@ -3,14 +3,16 @@
 namespace Controllers;
 
 use Exception;
+use Model\Producto;
 use MVC\Router;
 
-class ProductoController {
+class ProductoController 
+{
     public static function index(Router $router)
     {
-        $productos = Producto::find(2);
+        $producto = Producto::all();
         $router->render('producto/index', [
-            'productos' => $productos
+            'producto' => $producto
         ]);
     }
 
@@ -18,8 +20,8 @@ class ProductoController {
     {
         $_POST['pro_nombre'] = htmlspecialchars($_POST['pro_nombre']);
         try {
-            $producto = new Producto($_POST);
-            $resultado = $producto->guardar();
+            $productos = new Producto($_POST);
+            $resultado = $productos->crear();
             http_response_code(200);
             echo json_encode([
                 'codigo' => 1,
@@ -31,6 +33,22 @@ class ProductoController {
                 'codigo' => 0,
                 'mensaje' => 'Error al guardar producto',
                 'detalle' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public static function buscarAPI()
+    {
+        try {
+            $producto = Producto::all();
+            http_response_code(200);
+            echo json_encode($producto);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+            'codigo' => 0,
+            'mensaje' => 'Error al buscar productos',
+            'detalle' => $e->getMessage(),
             ]);
         }
     }

@@ -4,13 +4,14 @@ namespace Model;
 
 class Producto extends ActiveRecord
 {
-    protected static $tabla =' producto';
+    protected static $tabla = 'producto';
     protected static $idTabla = 'pro_id';
     protected static $columnasDB = ['pro_nombre', 'pro_precio'];
 
     public $pro_id;
     public $pro_nombre;
     public $pro_precio;
+
 
     public function __construct($args = [])
     {
