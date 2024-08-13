@@ -1,7 +1,7 @@
-    <div class="container mt-5">
+
         <h1 class="text-center mb-4">FORMULARIO PARA PRODUCTOS</h1>
         <div class="border shadow p-4">
-            <form action="">
+            <form>
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="nombre" class="form-label">Nombre del producto</label>
@@ -23,4 +23,6 @@
                 </div>
             </form>
         </div>
-    </div>
+
+        <script src="<?= asset('./build/js/producto/index.js') ?>"></script>
+
