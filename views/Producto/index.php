@@ -6,24 +6,18 @@
             <div class="row mb-3">
                 <div class="col">
                     <label for="pro_nombre" class="form-label">Nombre del Producto</label>
-                    <input type="text" name="pro_nombre" id="pro_nombre" class="form-control" placeholder="Ingrese el nombre de aplicación">
+                    <input type="text" name="pro_nombre" id="pro_nombre" class="form-control" placeholder="Producto">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
                     <label for="pro_precio" class="form-label">Precio del Producto</label>
-                    <input type="number" name="pro_precio" id="pro_precio" class="form-control" placeholder="Ingrese el precio del producto" step="0.01" min="0" />
+                    <input type="number" name="pro_precio" id="pro_precio" class="form-control" placeholder="Precio" step="0.01" min="0" />
                     </div>
             </div>
             <div class="row">
             <div class="col">
                 <button type="submit" id="btnGuardar" class="btn btn-primary w-100">Guardar</button>
-            </div>
-            <div class="col">
-                <button type="button" id="btnModificar" class="btn btn-warning w-100">Modificar</button>
-            </div>
-            <div class="col">
-                <button type="button" id="btnCancelar" class="btn btn-danger w-100">Cancelar</button>
             </div>
         </div>
         </form>
@@ -33,7 +27,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-12 table-responsive">
         <h2 class="text-center mt-3">Listado de productos</h2>
-        <table class="table table-bordered table-hover" id="tablaAplicacion">
+        <table class="table table-bordered table-hover" id="tablaProducto">
             <thead>
                 <tr>
                     <th>No.</th>

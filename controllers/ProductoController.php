@@ -57,4 +57,52 @@ class ProductoController
             ]);
         }
     }
+
+    
+    public static function modificarAPI()
+    {
+        $_POST['pro_nombre'] = htmlspecialchars($_POST['pro_nombre']);
+        $id = filter_var($_POST['pro_id'], FILTER_SANITIZE_NUMBER_INT);
+        try {
+
+            $producto = Producto::find($id);
+            $producto->sincronizar($_POST);
+            $producto->actualizar();
+            http_response_code(200);
+            echo json_encode([
+                'codigo' => 1,
+                'mensaje' => 'Producto modificado exitosamente',
+            ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Error al modificar producto',
+                'detalle' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public static function eliminarAPI()
+    {
+        $id = filter_var($_POST['pro_id'], FILTER_SANITIZE_NUMBER_INT);
+        try {
+            $producto = Producto::find($id);
+        
+                $producto->eliminar();
+                http_response_code(200);
+                echo json_encode([
+                    'codigo' => 1,
+                    'mensaje' => 'Producto eliminada exitosamente',
+                ]);
+           
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Error al eliminar app',
+                'detalle' => $e->getMessage(),
+            ]);
+        }
+    }
 }

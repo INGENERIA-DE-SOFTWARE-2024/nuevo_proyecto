@@ -102,7 +102,7 @@ const buscar = async () => {
         } else {
             const tr = document.createElement('tr');
             const td = document.createElement('td');
-            td.innerText = "No hay aplicaciones"
+            td.innerText = "No hay productos"
             td.colSpan = 4
 
             tr.appendChild(td)
