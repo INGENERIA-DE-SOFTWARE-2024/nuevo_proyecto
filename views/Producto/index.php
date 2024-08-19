@@ -1,22 +1,31 @@
-<h1 class="text-center mb-4">FORMULARIO PARA PRODUCTOS</h1>
+<h1 class="text-center mb-4">FORMULARIO PARA INGRESAR PRODUCTOS</h1>
 <div class="row justify-content-center">
     <div class="border shadow p-4 col-lg-6 text-center">
         <form id="formProducto">
+            <input type="hidden" name="pro_id" id="pro_id">
             <div class="row mb-3">
                 <div class="col">
-                    <label for="pro_nombre" class="form-label">Nombre del producto</label>
-                    <input type="text" name="pro_nombre" id="pro_nombre" class="form-control" placeholder="Ingrese el nombre del producto">
+                    <label for="pro_nombre" class="form-label">Nombre del Producto</label>
+                    <input type="text" name="pro_nombre" id="pro_nombre" class="form-control" placeholder="Ingrese el nombre de aplicación">
                 </div>
+            </div>
+            <div class="row mb-3">
                 <div class="col">
-                    <label for="pro_precio" class="form-label">Ingrese precio</label>
-                    <input type="number" name="pro_precio" id="pro_precio" min="0" step="0.01" placeholder="0.00" class="form-control">
-                </div>
+                    <label for="pro_precio" class="form-label">Precio del Producto</label>
+                    <input type="number" name="pro_precio" id="pro_precio" class="form-control" placeholder="Ingrese el precio del producto" step="0.01" min="0" />
+                    </div>
             </div>
             <div class="row">
-                <div class="col text-center">
-                    <button type="submit" class="btn btn-primary w-100">Enviar</button>
-                </div>
+            <div class="col">
+                <button type="submit" id="btnGuardar" class="btn btn-primary w-100">Guardar</button>
             </div>
+            <div class="col">
+                <button type="button" id="btnModificar" class="btn btn-warning w-100">Modificar</button>
+            </div>
+            <div class="col">
+                <button type="button" id="btnCancelar" class="btn btn-danger w-100">Cancelar</button>
+            </div>
+        </div>
         </form>
     </div>
 </div>
@@ -24,31 +33,19 @@
 <div class="row justify-content-center">
     <div class="col-lg-12 table-responsive">
         <h2 class="text-center mt-3">Listado de productos</h2>
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" id="tablaAplicacion">
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Producto</th>
+                    <th>Nombre</th>
                     <th>Precio</th>
+                    <th>Acción</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (count($producto) > 0) : ?>
-                    <?php foreach ($producto as $key => $produ) : ?>
-                        <tr>
-                            <td><?= $key + 1 ?></td>
-                            <input type="hidden" name="pro_id" value="<?= $key + 1 ?>">
-                            <td><?= $produ->pro_nombre ?></td> 
-                            <td><?= $produ->pro_precio ?></td>
-                        </tr>
-                    <?php endforeach ?>
-                <?php else : ?>
-                    <tr>
-                        <td colspan="4">No hay productos registrados</td>
-                    </tr>
-                <?php endif ?>
-            </tbody>
 
+            </tbody>
         </table>
     </div>
 </div>

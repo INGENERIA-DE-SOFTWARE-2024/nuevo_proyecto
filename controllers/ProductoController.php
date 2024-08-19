@@ -10,9 +10,9 @@ class ProductoController
 {
     public static function index(Router $router)
     {
-        $producto = Producto::all();
+        $productos = Producto::find(2);
         $router->render('producto/index', [
-            'producto' => $producto
+            'productos' => $productos
         ]);
     }
 
@@ -20,8 +20,8 @@ class ProductoController
     {
         $_POST['pro_nombre'] = htmlspecialchars($_POST['pro_nombre']);
         try {
-            $productos = new Producto($_POST);
-            $resultado = $productos->crear();
+            $producto = new Producto($_POST);
+            $resultado = $producto->crear();
             http_response_code(200);
             echo json_encode([
                 'codigo' => 1,
@@ -40,15 +40,20 @@ class ProductoController
     public static function buscarAPI()
     {
         try {
-            $producto = Producto::all();
+            $productos = Producto::obtenerProductosconQuery();
             http_response_code(200);
-            echo json_encode($producto);
+            echo json_encode([
+                'codigo' => 1,
+                'mensaje' => 'Datos encontrados',
+                'detalle' => '',
+                'datos' => $productos
+            ]);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode([
-            'codigo' => 0,
-            'mensaje' => 'Error al buscar productos',
-            'detalle' => $e->getMessage(),
+                'codigo' => 0,
+                'mensaje' => 'Error al buscar productos',
+                'detalle' => $e->getMessage(),
             ]);
         }
     }

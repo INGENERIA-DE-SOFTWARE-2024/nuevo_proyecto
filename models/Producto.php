@@ -12,11 +12,19 @@ class Producto extends ActiveRecord
     public $pro_nombre;
     public $pro_precio;
 
-
+  
     public function __construct($args = [])
     {
         $this->pro_id = $args['pro_id'] ?? null;
         $this->pro_nombre = $args['pro_nombre'] ?? '';
-        $this->pro_precio = $args['pro_precio'] ?? 0;
+        $this->pro_precio = $args['pro_precio'] ?? 0.00; 
     }
+
+    
+    public static function obtenerProductosconQuery()
+    {
+        $sql = "SELECT * FROM " . self::$tabla;
+        return self::fetchArray($sql);
+    }
+
 }
