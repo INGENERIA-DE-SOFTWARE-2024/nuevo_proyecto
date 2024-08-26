@@ -85,16 +85,20 @@ class ProductoController
 
     public static function eliminarAPI()
     {
+        getHeadersApi();
         $id = filter_var($_POST['pro_id'], FILTER_SANITIZE_NUMBER_INT);
         try {
             $producto = Producto::find($id);
-        
-                $producto->eliminar();
-                http_response_code(200);
-                echo json_encode([
-                    'codigo' => 1,
-                    'mensaje' => 'Producto eliminada exitosamente',
-                ]);
+            $producto->sincronizar([
+            'pro_situacion' => 0
+             ]);
+
+           $producto->actualizar();
+           http_response_code(200);
+           echo json_encode([
+               'codigo' => 1,
+               'mensaje' => 'Producto eliminado exitosamente',
+           ]);
            
         } catch (Exception $e) {
             http_response_code(500);

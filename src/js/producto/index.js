@@ -5,6 +5,13 @@ import Swal from "sweetalert2";
 const formulario = document.getElementById('formProducto')
 const tabla = document.getElementById('tablaProducto')
 const btnGuardar = document.getElementById('btnGuardar')
+const btnModificar = document.getElementById('btnModificar')
+const btnCancelar = document.getElementById('btnCancelar')
+
+btnModificar.parentElement.style.display = 'none'
+btnModificar.disabled = true
+btnCancelar.parentElement.style.display = 'none'
+btnCancelar.disabled = true
 
 const guardar = async (e) => {
     e.preventDefault()
@@ -117,6 +124,127 @@ const buscar = async () => {
 }
 buscar();
 
+const traerDatos = (producto) => {
+    console.log(producto);
+    formulario.pro_id.value = producto.pro_id
+    formulario.pro_nombre.value = producto.pro_nombre
+    formulario.pro_precio.value = producto.pro_precio
+    tabla.parentElement.parentElement.style.display = 'none'
+
+    btnGuardar.parentElement.style.display = 'none'
+    btnGuardar.disabled = true
+    btnModificar.parentElement.style.display = ''
+    btnModificar.disabled = false
+    btnCancelar.parentElement.style.display = ''
+    btnCancelar.disabled = false
+}
+
+const cancelar = () => {
+    tabla.parentElement.parentElement.style.display = ''
+    formulario.reset();
+    btnGuardar.parentElement.style.display = ''
+    btnGuardar.disabled = false
+    btnModificar.parentElement.style.display = 'none'
+    btnModificar.disabled = true
+    btnCancelar.parentElement.style.display = 'none'
+    btnCancelar.disabled = true
+}
+
+const modificar = async (e) => {
+    e.preventDefault()
+
+    if (!validarFormulario(formulario)) {
+        Swal.fire({
+            title: "Campos vacios",
+            text: "Debe llenar todos los campos",
+            icon: "info"
+        })
+        return
+    }
+
+    try {
+        const body = new FormData(formulario)
+        const url = "/nuevo_proyecto/API/producto/modificar"
+        const config = {
+            method: 'POST',
+            body
+        }
+
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+        const { codigo, mensaje, detalle } = data;
+        console.log(data);
+        let icon = 'info'
+        if (codigo == 1) {
+            icon = 'success'
+            formulario.reset();
+            buscar();
+            cancelar();
+        } else {
+            icon = 'error'
+            console.log(detalle);
+        }
+
+        Toast.fire({
+            icon: icon,
+            title: mensaje
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const eliminar = async (producto) => {
+
+    let confirmacion = await Swal.fire({
+        icon: 'question',
+        title: 'Confirmacion',
+        text: '¿Esta seguro que desea eliminar este registro?',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+    })
+
+    if (confirmacion.isConfirmed) {
+        try {
+            const body = new FormData();
+            body.append('pro_id', producto.pro_id);
+            const url = "/nuevo_proyecto/API/producto/eliminar";
+            const config = {
+                method: 'POST',
+                body
+            };
+
+            const respuesta = await fetch(url, config);
+            const data = await respuesta.json();
+            const { codigo, mensaje, detalle } = data;
+            let icon = 'info';
+            if (codigo == 1) {
+                icon = 'success';
+                formulario.reset();
+                buscar();
+            } else {
+                icon = 'error';
+                console.log(detalle);
+            }
+
+            Toast.fire({
+                icon: icon,
+                title: mensaje
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+};
+
+
+
 
 
 formulario.addEventListener('submit', guardar)
+btnCancelar.addEventListener('click', cancelar)
+btnModificar.addEventListener('click', modificar)
